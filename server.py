@@ -19,7 +19,7 @@ def home():
 
 @app.route("/ask", methods=["POST"])
 def ask():
-    data = request.get_json()
+    data = request.get_json(silent=True) or {}
     prompt = data.get("prompt", "")
 
     if not prompt:
@@ -46,7 +46,7 @@ def ask():
 
     except Exception as e:
         print(f"[Error]: {e}")
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": "Something went wrong. Please try again."}), 500
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5000, debug=True)
