@@ -1,5 +1,5 @@
 # Python virtual environment
-venv/
+.venv/
 
 # Python cache files
 pycache/
@@ -11,3 +11,4 @@ pycache/
 # Other unnecessary files
 *.sqlite3
 *.log
+.DS_Store
