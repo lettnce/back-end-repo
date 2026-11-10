@@ -29,7 +29,7 @@ def ask():
         print(f"\n[Prompt received]: {prompt}")
 
         full_prompt = f"""
-        You are an NBA expert. Talk about basketball in an engaging way.
+        You are an NBA analyst. Talk about basketball in an engaging way.
         Use your general basketball knowledge to answer questions.
 
         Question: {prompt}
