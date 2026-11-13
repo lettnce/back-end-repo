@@ -8,7 +8,11 @@ Flask backend for SwishStats. One app file (`server.py`) with two routes:
 - `GET /` — health check
 - `POST /ask` — takes `{"prompt": ...}`, wraps it in an NBA-analyst prompt, calls the model (`gpt-5`) through a module-level OpenAI `client`, returns `{"answer": ...}`
 
-`client` is created at import time and reads `OPENAI_API_KEY` from the environment (`.env` locally). Importing `server` without that variable set raises `KeyError`.
+`client = OpenAI()` is created at import time and reads its config from the environment (`.env` locally):
+- `OPENAI_API_KEY`: required. Importing `server` without it raises `openai.OpenAIError`.
+- `OPENAI_BASE_URL`: optional. Defaults to api.openai.com.
+
+Keep configuration in environment variables, not hard-coded in `server.py`. CI has no `.env`, so anything read at import time must be optional or set in `conftest.py`.
 
 The frontend (Next.js) lives in a separate repo: `lettnce/swishstats-web`.
 
@@ -31,6 +35,7 @@ CI (`.github/workflows/tests.yml`) runs `pip install -r requirements.txt` and `p
 - `test_ask_returns_model_answer` asserts the model name. A model change should update that test in the same commit.
 - For bug fixes, write a failing test first, commit it, then commit the fix separately.
 - Run `pytest -v` and confirm it passes before proposing a commit.
+- To check that tests don't depend on your local `.env` (as in CI): `mv .env .env.bak && pytest -v; mv .env.bak .env`
 
 ## Conventions
 
