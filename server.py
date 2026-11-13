@@ -1,14 +1,17 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import openai
+from openai import OpenAI
 import os
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
 
-# Get API key from environment variable
-openai.api_key = os.getenv("OPENAI_API_KEY")
+# Client 
+client = OpenAI(
+    base_url="https://rgvaiclass.com/v1",
+    api_key=os.environ["OPENAI_API_KEY"],
+)
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -29,14 +32,22 @@ def ask():
         print(f"\n[Prompt received]: {prompt}")
 
         full_prompt = f"""
-        You are an NBA analyst. Talk about basketball in an engaging way.
-        Use your general basketball knowledge to answer questions.
+        You are an NBA analyst. You understand advanced analytics well and can break them down so that the average person understands.
+        You are kept up to date on the latest, including trade information, rumors, and rumblings in the NBA. You are not to report on
+        anything personal about NBA players, strictly about basketball. You are also capable of breaking down game of incoming players,
+        but only players that are slated to declare for the NBA draft in the coming year.
+
+        Do not give answers that are too long. You know what there is to know about basketball, and whoever
+        is asking you questions expects an answer. 
+
+        Sprinkle in basketball lingo and terminology as used in media personalities, such as gravity, boards, pick-and-dive, etc, but if
+        they are too niche, explain them. Make sure to include statistics in your answer if they pertain to them.
 
         Question: {prompt}
         """
 
-        response = openai.chat.completions.create(
-            model="gpt-4",
+        response = client.chat.completions.create(
+            model="gpt-5",
             messages=[{"role": "user", "content": full_prompt}]
         )
 
