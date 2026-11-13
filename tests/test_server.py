@@ -48,7 +48,7 @@ def test_ask_returns_model_answer(client, fake_openai):
 
     fake_openai.chat.completions.create.assert_called_once()
     kwargs = fake_openai.chat.completions.create.call_args.kwargs
-    assert kwargs["model"] == "gpt-4"
+    assert kwargs["model"] == "gpt-5"
     sent_text = " ".join(m["content"] for m in kwargs["messages"])
     assert "Who is the best passing center?" in sent_text
 

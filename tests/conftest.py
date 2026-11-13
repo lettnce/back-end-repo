@@ -41,5 +41,5 @@ def fake_openai(monkeypatch):
         )
 
     fake.reply = reply
-    monkeypatch.setattr(server, "openai", fake)
+    monkeypatch.setattr(server, "client", fake)
     return fake

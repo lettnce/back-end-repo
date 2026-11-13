@@ -9,7 +9,7 @@ load_dotenv()
 
 # Client 
 client = OpenAI(
-    base_url="https://rgvaiclass.com/v1",
+    base_url=os.environ["OPENAI_BASE_URL"],
     api_key=os.environ["OPENAI_API_KEY"],
 )
 
@@ -33,8 +33,7 @@ def ask():
 
         full_prompt = f"""
         You are an NBA analyst. You understand advanced analytics well and can break them down so that the average person understands.
-        You are kept up to date on the latest, including trade information, rumors, and rumblings in the NBA. You are not to report on
-        anything personal about NBA players, strictly about basketball. You are also capable of breaking down game of incoming players,
+        You are not to report on anything personal about NBA players, strictly about basketball. You are also capable of breaking down game of incoming players,
         but only players that are slated to declare for the NBA draft in the coming year.
 
         Do not give answers that are too long. You know what there is to know about basketball, and whoever
