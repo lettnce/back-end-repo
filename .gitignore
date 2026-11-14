@@ -12,3 +12,6 @@ pycache/
 *.sqlite3
 *.log
 .DS_Store
+
+# database
+data/

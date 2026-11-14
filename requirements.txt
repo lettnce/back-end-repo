@@ -5,3 +5,4 @@ python-dotenv
 pandas
 requests
 pytest
+nba_api
